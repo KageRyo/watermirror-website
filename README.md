@@ -52,7 +52,9 @@ next kageryo-website deployment.
   missing string fails the build. Each locale is written in local usage rather than converted: for
   example, Simplified Chinese uses 数据, 保存 and 电导率 where Traditional Chinese uses 資料, 儲存 and
   導電度.
-- `src/assets/screenshots/` holds app screenshots copied from `WaterMirror/docs/screenshots/`.
+- `src/assets/screenshots/<locale>/` holds app screenshots in each language, captured from the
+  WaterMirror web build against a live WQSurrogateModels API for the sample reading in `facts.ts`.
+- `src/app/sitemap.ts` lists the four language pages; kageryo-website's `robots.txt` points to it.
 
 ## License
 

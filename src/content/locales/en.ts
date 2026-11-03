@@ -23,7 +23,7 @@ export const en: Copy = {
     download: "Download for Android",
     source: "View source on GitHub",
     facts: ["Android app {app}", "API {api} on PyPI", "Runs on x86 and ARM64"],
-    shotAlt: "WaterMirror report screen with sample data: overall score 62.45, Fair, with a percentile chart and the share of each band in the reference data.",
+    shotAlt: "WaterMirror report for a sample reading: overall score 61.48, Fair, from the direct WQI5 formula, with a percentile chart and the share of each band in the reference data.",
     gaugeTitle: "WQI5 gauge showing a score of {score}, in the {band} band",
   },
   indicators: {
@@ -63,7 +63,7 @@ export const en: Copy = {
     ],
     shots: {
       input: "Data entry with the model list open",
-      settings: "Backend settings with a test connection",
+      settings: "Backend settings with a server address",
     },
   },
   how: {

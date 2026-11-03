@@ -1,9 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import resultShot from "@/assets/screenshots/assessment-result.png";
-import inputShot from "@/assets/screenshots/model-options.png";
-import settingsShot from "@/assets/screenshots/backend-settings.png";
 import { BrandMark } from "@/components/BrandMark";
 import { LanguageMenu } from "@/components/LanguageMenu";
 import { LocaleLink } from "@/components/LocaleLink";
@@ -27,6 +24,7 @@ import {
   sampleReading,
   versions,
 } from "@/content/facts";
+import { screenshots } from "@/content/screenshots";
 
 const container = "mx-auto w-full max-w-[72rem] px-6 md:px-10";
 const sectionTitle = "font-display text-[2.125rem] font-semibold leading-[1.1] tracking-[-0.01em] md:text-[2.75rem]";
@@ -120,7 +118,7 @@ function Hero({ t, locale }: { t: Copy; locale: Locale }) {
               title={fill(t.hero.gaugeTitle, { score: sampleReading.score, band: bandName })}
             />
           </div>
-          <PhoneShot src={resultShot} alt={t.hero.shotAlt} priority className="w-[10.5rem] shrink-0 sm:w-[14rem] lg:w-[16rem]" />
+          <PhoneShot src={screenshots[locale].result} alt={t.hero.shotAlt} priority className="w-[10.5rem] shrink-0 sm:w-[14rem] lg:w-[16rem]" />
         </div>
       </div>
     </section>
@@ -149,7 +147,7 @@ function Indicators({ t }: { t: Copy }) {
   );
 }
 
-function Features({ t }: { t: Copy }) {
+function Features({ t, locale }: { t: Copy; locale: Locale }) {
   return (
     <section id="features" className={`${container} scroll-mt-6 py-20 md:py-28`}>
       <div className="grid gap-14 md:grid-cols-12 md:gap-10">
@@ -167,8 +165,8 @@ function Features({ t }: { t: Copy }) {
           </ul>
         </div>
         <div className="flex items-start justify-center gap-4 sm:gap-6 md:col-span-6 md:justify-end">
-          <PhoneShot src={inputShot} alt={t.features.shots.input} className="w-[46%] max-w-[15rem]" />
-          <PhoneShot src={settingsShot} alt={t.features.shots.settings} className="mt-16 w-[46%] max-w-[15rem]" />
+          <PhoneShot src={screenshots[locale].input} alt={t.features.shots.input} className="w-[46%] max-w-[15rem]" />
+          <PhoneShot src={screenshots[locale].settings} alt={t.features.shots.settings} className="mt-16 w-[46%] max-w-[15rem]" />
         </div>
       </div>
     </section>
@@ -671,7 +669,7 @@ export function Landing({ locale }: { locale: Locale }) {
       <main id="main">
         <Hero t={t} locale={locale} />
         <Indicators t={t} />
-        <Features t={t} />
+        <Features t={t} locale={locale} />
         <HowItWorks t={t} />
         <Bands t={t} />
         <Models t={t} />

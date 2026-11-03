@@ -47,9 +47,10 @@ export const bands = [
 
 export type BandId = (typeof bands)[number]["id"];
 
-// The hero screenshot shows this sample result (README: sample measurements
-// and results are simulated locally).
-export const sampleReading = { score: 62.45, band: "fair" as BandId };
+// The app screenshots show this sample reading (DO 72 %, BOD 4.1, NH3-N 0.85,
+// EC 410, SS 26) scored by WQSurrogateModels 2.3.0 with direct_wqi5: 61.483,
+// shown as 61.48 in the app.
+export const sampleReading = { score: 61.48, band: "fair" as BandId };
 
 export const indicators = ["DO", "BOD", "NH3N", "EC", "SS"] as const;
 export type Indicator = (typeof indicators)[number];

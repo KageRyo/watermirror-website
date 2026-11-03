@@ -24,7 +24,7 @@ export const zhTW: Copy = {
     download: "下載 Android 版",
     source: "在 GitHub 查看原始碼",
     facts: ["Android App {app}", "API {api}（PyPI）", "支援 x86 與 ARM64"],
-    shotAlt: "以範例資料產生的 WaterMirror 報表畫面：綜合評分 62.45、中等，並附百分位圖與參考資料中各等級的比例。",
+    shotAlt: "WaterMirror 對一筆範例資料的報表：以 WQI5 公式直接計算，綜合評分 61.48、中等，並附百分位圖與參考資料中各等級的比例。",
     gaugeTitle: "WQI5 水尺，分數 {score}，屬於「{band}」等級",
   },
   indicators: {
@@ -64,7 +64,7 @@ export const zhTW: Copy = {
     ],
     shots: {
       input: "資料輸入畫面，展開模型清單",
-      settings: "後端設定與連線測試",
+      settings: "後端設定畫面與伺服器位址",
     },
   },
   how: {
