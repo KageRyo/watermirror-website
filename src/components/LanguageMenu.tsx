@@ -8,7 +8,7 @@ type Option = { locale: string; lang: string; href: string; name: string };
 
 // A native <details> disclosure, so the menu also works before hydration.
 // The effect only adds closing on Escape and on clicks outside the menu.
-export function LanguageMenu({ label, current, options }: { label: string; current: string; options: Option[] }) {
+export function LanguageMenu({ label, current, options }: Readonly<{ label: string; current: string; options: Option[] }>) {
   const ref = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {

@@ -48,13 +48,13 @@ export function StaffGauge({
   bandNames,
   title,
   id,
-}: {
+}: Readonly<{
   score: number;
   band: BandId;
   bandNames: Record<BandId, string>;
   title: string;
   id: string;
-}) {
+}>) {
   const water = y(score);
   const marks = graduations();
   const clipAbove = `${id}-above`;
@@ -109,8 +109,8 @@ export function StaffGauge({
       <rect x={PLATE.x} y={y(100)} width={PLATE.w} height={100 * UNIT} fill="var(--color-surface)" stroke="var(--color-rule)" />
 
       <g clipPath={`url(#${clipAbove})`} fill="var(--color-ink)">
-        {marks.map((r, i) => (
-          <rect key={i} {...r} />
+        {marks.map((r) => (
+          <rect key={`${r.x}-${r.y}-${r.width}`} {...r} />
         ))}
       </g>
 
@@ -125,8 +125,8 @@ export function StaffGauge({
       <g className="waterline">
         <rect x={PLATE.x} y={water} width={PLATE.w} height={y(0) - water} fill="var(--color-river)" fillOpacity="0.12" />
         <g clipPath={`url(#${clipBelow})`} fill="var(--color-ink)" fillOpacity="0.35">
-          {marks.map((r, i) => (
-            <rect key={i} {...r} />
+          {marks.map((r) => (
+            <rect key={`${r.x}-${r.y}-${r.width}`} {...r} />
           ))}
         </g>
         <path d={wavePath(water, STRIP.x - 4, PLATE.x + PLATE.w + 6)} fill="none" stroke="var(--color-river)" strokeWidth="2" strokeLinecap="round" />

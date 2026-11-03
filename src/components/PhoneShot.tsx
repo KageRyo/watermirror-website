@@ -5,12 +5,12 @@ export function PhoneShot({
   alt,
   className = "",
   priority = false,
-}: {
+}: Readonly<{
   src: StaticImageData;
   alt: string;
   className?: string;
   priority?: boolean;
-}) {
+}>) {
   return (
     <div className={`rounded-[1.75rem] bg-ink p-[7px] ${className}`}>
       <Image
