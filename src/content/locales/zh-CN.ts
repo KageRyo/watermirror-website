@@ -26,7 +26,7 @@ export const zhCN: Copy = {
     download: "下载 Android 版",
     source: "在 GitHub 查看源代码",
     facts: ["Android 应用 {app}", "API {api}（PyPI）", "支持 x86 和 ARM64"],
-    shotAlt: "使用示例数据生成的 WaterMirror 报表界面：综合评分 62.45、中等，附百分位图和参考数据中各等级的占比。",
+    shotAlt: "WaterMirror 针对一条示例数据生成的报表：用 WQI5 公式直接计算，综合评分 61.48、中等，附百分位图和参考数据中各等级的占比。",
     gaugeTitle: "WQI5 水尺，分数 {score}，属于“{band}”等级",
   },
   indicators: {
@@ -66,7 +66,7 @@ export const zhCN: Copy = {
     ],
     shots: {
       input: "数据输入界面，展开了模型列表",
-      settings: "后端设置与连接测试",
+      settings: "后端设置界面与服务器地址",
     },
   },
   how: {

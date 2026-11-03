@@ -25,7 +25,7 @@ export const ja: Copy = {
     download: "Android 版をダウンロード",
     source: "GitHub でソースコードを見る",
     facts: ["Android アプリ {app}", "API {api}（PyPI）", "x86 と ARM64 に対応"],
-    shotAlt: "サンプルデータによる WaterMirror のレポート画面：総合評価 62.45（普通）、パーセンタイルのグラフ、参照データにおける各ランクの割合。",
+    shotAlt: "サンプルの測定値に対する WaterMirror のレポート：WQI5 の式で直接計算した総合評価 61.48（普通）、パーセンタイルのグラフ、参照データにおける各ランクの割合。",
     gaugeTitle: "WQI5 の量水標。スコア {score}、ランクは「{band}」",
   },
   indicators: {
@@ -65,7 +65,7 @@ export const ja: Copy = {
     ],
     shots: {
       input: "モデル一覧を開いたデータ入力画面",
-      settings: "バックエンド設定と接続テスト",
+      settings: "サーバーアドレスを入力したバックエンド設定",
     },
   },
   how: {

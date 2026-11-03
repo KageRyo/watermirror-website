@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef } from "react";
+
+import { LocaleLink } from "@/components/LocaleLink";
 
 type Option = { locale: string; lang: string; href: string; name: string };
 
@@ -44,7 +45,8 @@ export function LanguageMenu({ label, current, options }: { label: string; curre
       <ul className="absolute right-0 top-full z-20 mt-1 min-w-[11rem] rounded border border-ink bg-surface py-1">
         {options.map((o) => (
           <li key={o.locale}>
-            <Link
+            <LocaleLink
+              locale={o.locale}
               href={o.href}
               lang={o.lang}
               hrefLang={o.lang}
@@ -52,7 +54,7 @@ export function LanguageMenu({ label, current, options }: { label: string; curre
               className="flex min-h-11 items-center px-4 transition-colors hover:bg-wash aria-[current=page]:font-semibold"
             >
               {o.name}
-            </Link>
+            </LocaleLink>
           </li>
         ))}
       </ul>

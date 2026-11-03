@@ -31,6 +31,8 @@ jobs:
 
       - run: npm run lint
 
+      - run: npm test
+
       # Same settings as the production build in KageRyo/kageryo-website.
       # next build also runs the TypeScript check.
       - run: npm run build

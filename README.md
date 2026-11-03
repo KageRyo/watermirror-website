@@ -7,6 +7,10 @@ published at <https://kageryo.coderyo.com/watermirror/>.
 It is a static Next.js site in four languages: English (`/`), Traditional Chinese (`/zh-tw/`),
 Simplified Chinese (`/zh-cn/`) and Japanese (`/ja/`).
 
+The home page follows the browser's language: a visitor whose browser prefers Chinese or Japanese
+is sent to that page before it paints, unless they have picked a language from the menu. Direct
+links to a language page are never redirected.
+
 ## Develop
 
 Requires Node.js 20.9 or newer.
@@ -15,6 +19,7 @@ Requires Node.js 20.9 or newer.
 npm ci
 npm run dev        # http://localhost:3000/
 npm run lint
+npm test           # unit tests (Node's built-in runner)
 npm run typecheck  # run after a build or dev start, which generate next-env.d.ts
 ```
 
@@ -47,7 +52,9 @@ next kageryo-website deployment.
   missing string fails the build. Each locale is written in local usage rather than converted: for
   example, Simplified Chinese uses 数据, 保存 and 电导率 where Traditional Chinese uses 資料, 儲存 and
   導電度.
-- `src/assets/screenshots/` holds app screenshots copied from `WaterMirror/docs/screenshots/`.
+- `src/assets/screenshots/<locale>/` holds app screenshots in each language, captured from the
+  WaterMirror web build against a live WQSurrogateModels API for the sample reading in `facts.ts`.
+- `src/app/sitemap.ts` lists the four language pages; kageryo-website's `robots.txt` points to it.
 
 ## License
 
