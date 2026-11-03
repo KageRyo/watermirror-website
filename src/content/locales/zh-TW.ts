@@ -90,7 +90,7 @@ export const zhTW: Copy = {
   },
   bands: {
     title: "六個等級，各有適用用途",
-    intro: "API 會把每個分數歸入六個等級之一，App 再說明該等級的水適合哪些用途。",
+    intro: "API 會把每個分數歸入六個等級之一，App 再列出 WQI5 分級建議的用途。WQI5 只涵蓋五項指標，要作為飲用水，仍須符合飲用水水質標準。",
     tableLabel: "WQI5 等級、分數區間與適用用途",
     names: { excellent: "優良", good: "良好", fair: "中等", poor: "不良", bad: "糟糕", terrible: "惡劣" },
     uses: {
@@ -123,7 +123,7 @@ export const zhTW: Copy = {
     usable: "可作為估計",
     unreliable: "不可靠",
     metricNote: "MAE 以 WQI5 分數計，越低越好。R² 低於 0 代表比一律猜平均分數還差。",
-    takeaway: "氨氮可以從其他四項指標估回來，誤差約 2.4 分；BOD 不行，少了它誤差會升到 12 到 15 分，所以 BOD 是一定要量的指標。",
+    takeaway: "氨氮可以從其他四項指標估回來，誤差約 2.4 分；BOD 不行，少了它誤差會升到 12 到 15 分，所以在本研究的資料上，BOD 仍須實測。",
     scopeNote: "以上為研究結果；目前 App 與 API 只對五項指標齊全的資料評分。",
     readMore: "查看缺值實驗說明",
   },

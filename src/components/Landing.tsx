@@ -35,7 +35,7 @@ const secondaryButton = `${buttonBase} border border-ink text-ink hover:bg-surfa
 const textLink =
   "inline-flex min-h-11 items-center font-semibold text-river underline decoration-1 underline-offset-4 transition-colors hover:text-ink";
 
-function External({ href, className, children, label }: { href: string; className?: string; children: ReactNode; label?: string }) {
+function External({ href, className, children, label }: Readonly<{ href: string; className?: string; children: ReactNode; label?: string }>) {
   return (
     <a href={href} className={className} aria-label={label} rel="noopener noreferrer">
       {children}
@@ -45,7 +45,7 @@ function External({ href, className, children, label }: { href: string; classNam
 
 const languageOptions = locales.map((l) => ({ locale: l, lang: htmlLang[l], href: localePath[l], name: localeName[l] }));
 
-function SiteHeader({ t, locale }: { t: Copy; locale: Locale }) {
+function SiteHeader({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
   const nav = [
     ["#features", t.nav.features],
     ["#how-it-works", t.nav.howItWorks],
@@ -80,7 +80,7 @@ function SiteHeader({ t, locale }: { t: Copy; locale: Locale }) {
   );
 }
 
-function Hero({ t, locale }: { t: Copy; locale: Locale }) {
+function Hero({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
   const bandName = t.bands.names[sampleReading.band];
   const titleSize =
     locale === "en" ? "text-[2.625rem] md:text-[3.5rem] lg:text-[4rem]" : "text-[2.25rem] md:text-[3rem] lg:text-[3.5rem]";
@@ -125,7 +125,7 @@ function Hero({ t, locale }: { t: Copy; locale: Locale }) {
   );
 }
 
-function Indicators({ t }: { t: Copy }) {
+function Indicators({ t }: Readonly<{ t: Copy }>) {
   return (
     <section aria-label={t.indicators.label} className="border-y border-rule bg-surface">
       <dl className={`${container} grid grid-cols-2 gap-x-6 gap-y-6 py-7 sm:grid-cols-3 md:grid-cols-5`}>
@@ -147,7 +147,7 @@ function Indicators({ t }: { t: Copy }) {
   );
 }
 
-function Features({ t, locale }: { t: Copy; locale: Locale }) {
+function Features({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
   return (
     <section id="features" className={`${container} scroll-mt-6 py-20 md:py-28`}>
       <div className="grid gap-14 md:grid-cols-12 md:gap-10">
@@ -173,7 +173,7 @@ function Features({ t, locale }: { t: Copy; locale: Locale }) {
   );
 }
 
-function DiagramNode({ title, body }: { title: string; body: string }) {
+function DiagramNode({ title, body }: Readonly<{ title: string; body: string }>) {
   return (
     <div className="rounded border border-ink bg-surface px-4 py-3">
       <p className="font-display text-[1.125rem] font-semibold leading-snug">{title}</p>
@@ -182,7 +182,7 @@ function DiagramNode({ title, body }: { title: string; body: string }) {
   );
 }
 
-function Connector({ label }: { label: string }) {
+function Connector({ label }: Readonly<{ label: string }>) {
   return (
     <div className="flex items-center gap-3 py-1 pl-6" aria-hidden="false">
       <svg width="12" height="36" viewBox="0 0 12 36" aria-hidden="true" className="shrink-0">
@@ -194,7 +194,7 @@ function Connector({ label }: { label: string }) {
   );
 }
 
-function HowItWorks({ t }: { t: Copy }) {
+function HowItWorks({ t }: Readonly<{ t: Copy }>) {
   const d = t.how.diagram;
   return (
     <section id="how-it-works" className="scroll-mt-6 border-t border-rule py-20 md:py-28">
@@ -246,7 +246,7 @@ function HowItWorks({ t }: { t: Copy }) {
   );
 }
 
-function Bands({ t }: { t: Copy }) {
+function Bands({ t }: Readonly<{ t: Copy }>) {
   return (
     <section className={`${container} py-20 md:py-28`} aria-labelledby="bands-title">
       <div className="max-w-[44rem]">
@@ -280,7 +280,7 @@ function Bands({ t }: { t: Copy }) {
   );
 }
 
-function Models({ t }: { t: Copy }) {
+function Models({ t }: Readonly<{ t: Copy }>) {
   const max = Math.max(...completeInput.map((m) => m.mae));
   return (
     <section id="models" className="scroll-mt-6 border-t border-rule py-20 md:py-28">
@@ -343,7 +343,7 @@ function Models({ t }: { t: Copy }) {
   );
 }
 
-function Missing({ t, locale }: { t: Copy; locale: Locale }) {
+function Missing({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
   const { listSeparator, listAnd } = t.missing;
   const label = (ids: readonly string[]) => ids.map((id) => (id === "NH3N" ? "NH₃-N" : id));
   const joinAll = (ids: readonly string[]) => label(ids).join(listSeparator);
@@ -412,7 +412,7 @@ function Missing({ t, locale }: { t: Copy; locale: Locale }) {
   );
 }
 
-function Edge({ t }: { t: Copy }) {
+function Edge({ t }: Readonly<{ t: Copy }>) {
   const max = Math.max(...nanoLatency.map((m) => m.p95));
   const rf = nanoLatency.find((m) => m.id === "rf")!;
   const figures = [
@@ -500,9 +500,11 @@ function Edge({ t }: { t: Copy }) {
   );
 }
 
-function CodeBlock({ code, label }: { code: string; label: string }) {
+// Long lines wrap instead of scrolling sideways, so a keyboard user never
+// has to focus the block to read it. Copying still gives the original lines.
+function CodeBlock({ code }: Readonly<{ code: string }>) {
   return (
-    <pre aria-label={label} tabIndex={0} className="mt-4 overflow-x-auto rounded border border-rule bg-surface px-4 py-3.5 text-[0.8125rem] leading-relaxed">
+    <pre className="mt-4 whitespace-pre-wrap rounded border border-rule bg-surface px-4 py-3.5 text-[0.8125rem] leading-relaxed [overflow-wrap:anywhere]">
       <code>{code}</code>
     </pre>
   );
@@ -513,8 +515,8 @@ cd WQSurrogateModels
 uv sync
 uv run python main.py`;
 
-const curlCode = `curl -X POST http://localhost:8001/api/v2/assessment \\
-  -H "Content-Type: application/json" \\
+const curlCode = String.raw`curl -X POST http://localhost:8001/api/v2/assessment \
+  -H "Content-Type: application/json" \
   -d '{"DO":70,"BOD":2,"NH3N":0.3,"EC":400,"SS":10,
        "model_type":"direct_wqi5"}'
 
@@ -524,7 +526,7 @@ const curlCode = `curl -X POST http://localhost:8001/api/v2/assessment \\
 const startRow = "grid gap-4 border-t border-rule py-8 md:grid-cols-12 md:gap-10";
 const startTitle = "font-display text-[1.5rem] font-semibold leading-snug md:col-span-4";
 
-function GetStarted({ t }: { t: Copy }) {
+function GetStarted({ t }: Readonly<{ t: Copy }>) {
   return (
     <section id="get-started" className={`${container} scroll-mt-6 py-20 md:py-28`}>
       <h2 className={sectionTitle}>{t.start.title}</h2>
@@ -549,7 +551,7 @@ function GetStarted({ t }: { t: Copy }) {
           <h3 className={startTitle}>{t.start.server.title}</h3>
           <div className="min-w-0 md:col-span-8">
             <p className="text-muted">{t.start.server.body}</p>
-            <CodeBlock code={serverCode} label={t.start.server.title} />
+            <CodeBlock code={serverCode} />
             <p className="mt-3 text-[1rem] text-muted">
               <Rich text={t.start.server.pypi} />
             </p>
@@ -559,7 +561,7 @@ function GetStarted({ t }: { t: Copy }) {
           <h3 className={startTitle}>{t.start.api.title}</h3>
           <div className="min-w-0 md:col-span-8">
             <p className="text-muted">{t.start.api.body}</p>
-            <CodeBlock code={curlCode} label={t.start.api.title} />
+            <CodeBlock code={curlCode} />
             <p className="mt-3">
               <External href={links.apiReference} className={textLink}>
                 {t.start.api.docs}
@@ -573,7 +575,7 @@ function GetStarted({ t }: { t: Copy }) {
 }
 
 
-function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
+function SiteFooter({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
   const repos = [
     [links.watermirror, "WaterMirror", t.footer.app],
     [links.wqsurrogate, "WQSurrogateModels", t.footer.api],
@@ -595,7 +597,7 @@ function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
           <p className="flex items-center gap-2.5 font-display text-[1.375rem] font-semibold">
             <span className="rounded bg-paper p-1">
               <BrandMark className="h-6 w-6" />
-            </span>
+            </span>{" "}
             WaterMirror
           </p>
           <p className="mt-4 text-[1rem] text-paper/75">
@@ -655,7 +657,7 @@ function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
   );
 }
 
-export function Landing({ locale }: { locale: Locale }) {
+export function Landing({ locale }: Readonly<{ locale: Locale }>) {
   const t = copy[locale];
   return (
     <>

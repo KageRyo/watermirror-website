@@ -9,12 +9,12 @@ export function RootDocument({
   cjkFont,
   head,
   children,
-}: {
+}: Readonly<{
   locale: Locale;
   cjkFont?: string;
   head?: React.ReactNode;
   children: React.ReactNode;
-}) {
+}>) {
   const fonts = [barlow.variable, barlowSemiCondensed.variable, cjkFont].filter(Boolean).join(" ");
   return (
     <html lang={htmlLang[locale]} className={`${fonts} antialiased`}>

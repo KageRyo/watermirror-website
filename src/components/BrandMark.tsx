@@ -1,5 +1,5 @@
 // A single staff-gauge "E" above a waterline, with its reflection below.
-export function BrandMark({ className = "h-7 w-7" }: { className?: string }) {
+export function BrandMark({ className = "h-7 w-7" }: Readonly<{ className?: string }>) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" className={className}>
       <g fill="var(--color-ink)">

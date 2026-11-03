@@ -12,12 +12,12 @@ export type SiteLocale = "en" | "zh-TW" | "zh-CN" | "ja";
 export function pickLocale(languages: readonly string[]): SiteLocale {
   for (const raw of languages) {
     const tag = String(raw).toLowerCase();
-    if (tag === "en" || tag.indexOf("en-") === 0) return "en";
-    if (tag === "ja" || tag.indexOf("ja-") === 0) return "ja";
-    if (tag === "zh" || tag.indexOf("zh-") === 0) {
-      const parts = tag.split("-");
-      const traditional = parts.indexOf("hant") > 0 || parts.indexOf("tw") > 0 || parts.indexOf("hk") > 0 || parts.indexOf("mo") > 0;
-      const simplified = parts.indexOf("hans") > 0;
+    if (tag === "en" || tag.startsWith("en-")) return "en";
+    if (tag === "ja" || tag.startsWith("ja-")) return "ja";
+    if (tag === "zh" || tag.startsWith("zh-")) {
+      const subtags = new Set(tag.split("-"));
+      const traditional = ["hant", "tw", "hk", "mo"].some((subtag) => subtags.has(subtag));
+      const simplified = subtags.has("hans");
       return traditional && !simplified ? "zh-TW" : "zh-CN";
     }
   }
