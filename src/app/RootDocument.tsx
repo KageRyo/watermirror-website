@@ -6,16 +6,14 @@ import { barlow, barlowSemiCondensed } from "./fonts";
 
 export function RootDocument({
   locale,
-  cjkFont,
   head,
   children,
 }: Readonly<{
   locale: Locale;
-  cjkFont?: string;
   head?: React.ReactNode;
   children: React.ReactNode;
 }>) {
-  const fonts = [barlow.variable, barlowSemiCondensed.variable, cjkFont].filter(Boolean).join(" ");
+  const fonts = `${barlow.variable} ${barlowSemiCondensed.variable}`;
   return (
     <html lang={htmlLang[locale]} className={`${fonts} antialiased`}>
       {head ? <head>{head}</head> : null}
