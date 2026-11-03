@@ -15,9 +15,9 @@ export function pickLocale(languages: readonly string[]): SiteLocale {
     if (tag === "en" || tag.startsWith("en-")) return "en";
     if (tag === "ja" || tag.startsWith("ja-")) return "ja";
     if (tag === "zh" || tag.startsWith("zh-")) {
-      const parts = tag.split("-");
-      const traditional = ["hant", "tw", "hk", "mo"].some((subtag) => parts.includes(subtag));
-      const simplified = parts.includes("hans");
+      const subtags = new Set(tag.split("-"));
+      const traditional = ["hant", "tw", "hk", "mo"].some((subtag) => subtags.has(subtag));
+      const simplified = subtags.has("hans");
       return traditional && !simplified ? "zh-TW" : "zh-CN";
     }
   }
