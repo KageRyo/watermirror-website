@@ -26,9 +26,10 @@ export const links = {
   author: "https://github.com/KageRyo",
 } as const;
 
-// GitHub releases WaterMirror-v2.3.6 and WQSurrogateModels-v2.3.0 (2026-10-31).
+// GitHub releases WaterMirror-v2.3.7 (2026-11-03) and WQSurrogateModels-v2.3.0
+// (2026-10-31).
 export const versions = {
-  app: "2.3.6",
+  app: "2.3.7",
   api: "2.3.0",
 } as const;
 
