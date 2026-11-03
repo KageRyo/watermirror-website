@@ -55,11 +55,17 @@ next kageryo-website deployment.
 - `src/assets/screenshots/<locale>/` holds app screenshots in each language, captured from the
   WaterMirror web build against a live WQSurrogateModels API for the sample reading in `facts.ts`.
 - `src/app/sitemap.ts` lists the four language pages; kageryo-website's `robots.txt` points to it.
+- `src/app/fonts/` holds the Latin subset of Barlow and Barlow Semi Condensed, so the build needs no
+  network access for fonts. Chinese and Japanese text uses each platform's system fonts, listed per
+  language in `src/app/globals.css`.
 
 ## License
 
 The Apache License 2.0 applies to the source code and documentation included in this repository,
 unless otherwise stated. See [LICENSE](LICENSE).
+
+The Barlow font files in `src/app/fonts/` are licensed under the SIL Open Font License 1.1; see
+[`src/app/fonts/OFL.txt`](src/app/fonts/OFL.txt).
 
 It does not grant any rights to research datasets, trained model artifacts, or other materials that
 are not distributed with this repository. Figures shown on the site are aggregate results published

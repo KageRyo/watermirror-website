@@ -12,9 +12,30 @@
   /* Same hue as the "Bad" WQI5 band; marks results that are not reliable. */
   --color-caution: #c9622f;
 
-  --font-sans: var(--font-barlow, "Barlow"), var(--font-cjk, "Noto Sans CJK"), "PingFang TC", "PingFang SC", "Hiragino Sans", "Microsoft JhengHei", "Microsoft YaHei", "Yu Gothic", ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-barlow-sc, "Barlow Semi Condensed"), var(--font-cjk, "Noto Sans CJK"), "PingFang TC", "PingFang SC", "Hiragino Sans", "Microsoft JhengHei", "Microsoft YaHei", "Yu Gothic", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-barlow, "Barlow"), var(--font-cjk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-barlow-sc, "Barlow Semi Condensed"), var(--font-cjk), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
+}
+
+/* Chinese and Japanese text uses the system fonts for its language: Apple
+   platforms, then Noto CJK (Linux, Android), then Windows. */
+:root,
+:lang(zh-Hant) {
+  --font-cjk: "PingFang TC", "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei";
+}
+
+:lang(zh-Hans) {
+  --font-cjk: "PingFang SC", "Noto Sans SC", "Noto Sans CJK SC", "Microsoft YaHei";
+}
+
+:lang(ja) {
+  --font-cjk: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans CJK JP", Meiryo, "Yu Gothic";
+}
+
+/* Language names in the menus are marked with their own language. The stack
+   is spelled out here because --font-sans resolves --font-cjk at the root. */
+[lang]:not(html) {
+  font-family: var(--font-barlow, "Barlow"), var(--font-cjk), ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
