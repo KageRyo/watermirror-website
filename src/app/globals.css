@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: #14262c;
+  --color-muted: #52646a;
+  --color-paper: #f1f4f3;
+  --color-surface: #ffffff;
+  --color-rule: #d3dcda;
+  --color-river: #0e5a5e;
+  --color-river-deep: #0a4346;
+  --color-wash: #e3eeec;
+
+  --font-sans: var(--font-barlow, "Barlow"), var(--font-noto-tc, "Noto Sans TC"), "PingFang TC", "Microsoft JhengHei", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-barlow-sc, "Barlow Semi Condensed"), var(--font-noto-tc, "Noto Sans TC"), "PingFang TC", "Microsoft JhengHei", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-feature-settings: "lnum" 1;
+  text-rendering: optimizeLegibility;
+}
+
+/* CJK text needs a little more leading than Latin text at the same size,
+   and headings should break at punctuation rather than inside a word. */
+html[lang^="zh"] body {
+  line-height: 1.75;
+}
+
+html[lang^="zh"] :is(h1, h2, h3) {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-river);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+.inline-code {
+  background: var(--color-wash);
+  border-radius: 3px;
+  padding: 0.05em 0.3em;
+  overflow-wrap: anywhere;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* The waterline on the hero gauge settles once, on first paint. */
+@keyframes settle {
+  from {
+    transform: translateY(var(--rise, 24px));
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.waterline {
+  animation: settle 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waterline {
+    animation: none;
+  }
 }
