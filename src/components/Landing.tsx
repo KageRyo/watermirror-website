@@ -6,6 +6,7 @@ import inputShot from "@/assets/screenshots/model-options.png";
 import settingsShot from "@/assets/screenshots/backend-settings.png";
 import { BrandMark } from "@/components/BrandMark";
 import { LanguageMenu } from "@/components/LanguageMenu";
+import { LocaleLink } from "@/components/LocaleLink";
 import { PhoneShot } from "@/components/PhoneShot";
 import { Rich } from "@/components/Rich";
 import { StaffGauge } from "@/components/StaffGauge";
@@ -637,7 +638,8 @@ function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
           <ul className="mt-2 text-[1rem]">
             {locales.map((l) => (
               <li key={l}>
-                <Link
+                <LocaleLink
+                  locale={l}
                   href={localePath[l]}
                   lang={htmlLang[l]}
                   hrefLang={htmlLang[l]}
@@ -645,7 +647,7 @@ function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
                   className={`${footerLink} aria-[current=page]:font-semibold`}
                 >
                   {localeName[l]}
-                </Link>
+                </LocaleLink>
               </li>
             ))}
           </ul>
