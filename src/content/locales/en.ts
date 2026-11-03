@@ -89,7 +89,7 @@ export const en: Copy = {
   },
   bands: {
     title: "Six bands, each with a use",
-    intro: "The API places every score in one of six bands. The app then explains what water in that band is suitable for.",
+    intro: "The API places every score in one of six bands, and the app shows the uses the WQI5 classification suggests for that band. WQI5 covers five indicators only, so water for drinking still has to meet drinking-water standards.",
     tableLabel: "WQI5 bands, score ranges and suitable uses",
     names: { excellent: "Excellent", good: "Good", fair: "Fair", poor: "Poor", bad: "Bad", terrible: "Terrible" },
     uses: {
@@ -122,7 +122,7 @@ export const en: Copy = {
     usable: "Usable as an estimate",
     unreliable: "Not reliable",
     metricNote: "MAE is in WQI5 points; lower is better. An R² below 0 means the estimate does worse than always guessing the average score.",
-    takeaway: "NH₃-N can be estimated from the other four indicators to within about 2.4 points. BOD cannot: without it, the error rises to 12–15 points, so BOD is the indicator that has to be measured.",
+    takeaway: "NH₃-N can be estimated from the other four indicators to within about 2.4 points. BOD cannot: without it, the error rises to 12–15 points, so on the research data BOD still has to be measured.",
     scopeNote: "These are research results. The app and API currently score complete five-indicator records only.",
     readMore: "Read the missing-indicator experiments",
   },
