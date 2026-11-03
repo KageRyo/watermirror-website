@@ -9,9 +9,11 @@
   --color-river: #0e5a5e;
   --color-river-deep: #0a4346;
   --color-wash: #e3eeec;
+  /* Same hue as the "Bad" WQI5 band; marks results that are not reliable. */
+  --color-caution: #c9622f;
 
-  --font-sans: var(--font-barlow, "Barlow"), var(--font-noto-tc, "Noto Sans TC"), "PingFang TC", "Microsoft JhengHei", ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-barlow-sc, "Barlow Semi Condensed"), var(--font-noto-tc, "Noto Sans TC"), "PingFang TC", "Microsoft JhengHei", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-barlow, "Barlow"), var(--font-cjk, "Noto Sans CJK"), "PingFang TC", "PingFang SC", "Hiragino Sans", "Microsoft JhengHei", "Microsoft YaHei", "Yu Gothic", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-barlow-sc, "Barlow Semi Condensed"), var(--font-cjk, "Noto Sans CJK"), "PingFang TC", "PingFang SC", "Hiragino Sans", "Microsoft JhengHei", "Microsoft YaHei", "Yu Gothic", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
 }
 
@@ -38,13 +40,19 @@ body {
 }
 
 /* CJK text needs a little more leading than Latin text at the same size,
-   and headings should break at punctuation rather than inside a word. */
-html[lang^="zh"] body {
+   and headings should break at punctuation or phrase boundaries rather than
+   inside a word. */
+html:is([lang^="zh"], [lang="ja"]) body {
   line-height: 1.75;
 }
 
 html[lang^="zh"] :is(h1, h2, h3) {
   word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+html[lang="ja"] :is(h1, h2, h3) {
+  word-break: auto-phrase;
   overflow-wrap: anywhere;
 }
 

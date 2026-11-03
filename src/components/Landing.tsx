@@ -5,10 +5,11 @@ import resultShot from "@/assets/screenshots/assessment-result.png";
 import inputShot from "@/assets/screenshots/model-options.png";
 import settingsShot from "@/assets/screenshots/backend-settings.png";
 import { BrandMark } from "@/components/BrandMark";
+import { LanguageMenu } from "@/components/LanguageMenu";
 import { PhoneShot } from "@/components/PhoneShot";
 import { Rich } from "@/components/Rich";
 import { StaffGauge } from "@/components/StaffGauge";
-import { copy, fill, localePath, type Copy, type Locale } from "@/content/copy";
+import { copy, fill, htmlLang, localeName, localePath, locales, type Copy, type Locale } from "@/content/copy";
 import {
   bands,
   completeInput,
@@ -16,6 +17,8 @@ import {
   indicators,
   indicatorUnits,
   links,
+  missingIndicator,
+  missingIndicatorHoldoutRows,
   nanoDevice,
   nanoLatency,
   parity,
@@ -41,8 +44,9 @@ function External({ href, className, children, label }: { href: string; classNam
   );
 }
 
+const languageOptions = locales.map((l) => ({ locale: l, lang: htmlLang[l], href: localePath[l], name: localeName[l] }));
+
 function SiteHeader({ t, locale }: { t: Copy; locale: Locale }) {
-  const other: Locale = locale === "en" ? "zh-TW" : "en";
   const nav = [
     ["#features", t.nav.features],
     ["#how-it-works", t.nav.howItWorks],
@@ -68,9 +72,7 @@ function SiteHeader({ t, locale }: { t: Copy; locale: Locale }) {
         </ul>
       </nav>
       <div className="flex items-center gap-5 text-[1rem]">
-        <Link href={localePath[other]} hrefLang={other} lang={other} aria-label={t.nav.switchLanguageLabel} className="inline-flex min-h-11 items-center transition-colors hover:text-river">
-          {t.nav.switchLanguage}
-        </Link>
+        <LanguageMenu label={t.nav.language} current={locale} options={languageOptions} />
         <External href={links.watermirror} className="inline-flex min-h-11 items-center transition-colors hover:text-river">
           {t.nav.github}
         </External>
@@ -81,7 +83,8 @@ function SiteHeader({ t, locale }: { t: Copy; locale: Locale }) {
 
 function Hero({ t, locale }: { t: Copy; locale: Locale }) {
   const bandName = t.bands.names[sampleReading.band];
-  const titleSize = locale === "en" ? "text-[2.625rem] md:text-[3.5rem] lg:text-[4rem]" : "text-[2.375rem] md:text-[3.125rem] lg:text-[3.5rem]";
+  const titleSize =
+    locale === "en" ? "text-[2.625rem] md:text-[3.5rem] lg:text-[4rem]" : "text-[2.25rem] md:text-[3rem] lg:text-[3.5rem]";
   return (
     <section className={`${container} grid gap-12 pb-16 pt-8 md:grid-cols-12 md:items-center md:gap-8 md:pb-24 md:pt-14`}>
       <div className="md:col-span-7 lg:col-span-6">
@@ -105,7 +108,7 @@ function Hero({ t, locale }: { t: Copy; locale: Locale }) {
           ))}
         </ul>
       </div>
-      <figure className="md:col-span-5 lg:col-span-6">
+      <div className="md:col-span-5 lg:col-span-6">
         <div className="flex items-stretch justify-center gap-3 sm:gap-5 md:justify-end">
           <div className="w-[140px] shrink-0 sm:w-[195px] lg:w-[223px]">
             <StaffGauge
@@ -118,8 +121,7 @@ function Hero({ t, locale }: { t: Copy; locale: Locale }) {
           </div>
           <PhoneShot src={resultShot} alt={t.hero.shotAlt} priority className="w-[10.5rem] shrink-0 sm:w-[14rem] lg:w-[16rem]" />
         </div>
-        <figcaption className="mt-4 text-center text-[0.875rem] text-muted md:text-right">{t.hero.figureCaption}</figcaption>
-      </figure>
+      </div>
     </section>
   );
 }
@@ -164,14 +166,8 @@ function Features({ t }: { t: Copy }) {
           </ul>
         </div>
         <div className="flex items-start justify-center gap-4 sm:gap-6 md:col-span-6 md:justify-end">
-          <figure className="w-[46%] max-w-[15rem]">
-            <PhoneShot src={inputShot} alt={t.features.shots.input} />
-            <figcaption className="mt-3 text-[0.875rem] text-muted">{t.features.shots.input}</figcaption>
-          </figure>
-          <figure className="mt-16 w-[46%] max-w-[15rem]">
-            <PhoneShot src={settingsShot} alt={t.features.shots.settings} />
-            <figcaption className="mt-3 text-[0.875rem] text-muted">{t.features.shots.settings}</figcaption>
-          </figure>
+          <PhoneShot src={inputShot} alt={t.features.shots.input} className="w-[46%] max-w-[15rem]" />
+          <PhoneShot src={settingsShot} alt={t.features.shots.settings} className="mt-16 w-[46%] max-w-[15rem]" />
         </div>
       </div>
     </section>
@@ -348,6 +344,75 @@ function Models({ t }: { t: Copy }) {
   );
 }
 
+function Missing({ t, locale }: { t: Copy; locale: Locale }) {
+  const { listSeparator, listAnd } = t.missing;
+  const label = (ids: readonly string[]) => ids.map((id) => (id === "NH3N" ? "NH₃-N" : id));
+  const joinAll = (ids: readonly string[]) => label(ids).join(listSeparator);
+  const joinAnd = (ids: readonly string[]) => {
+    const names = label(ids);
+    return names.length < 2 ? names.join("") : `${names.slice(0, -1).join(listSeparator)}${listAnd}${names.at(-1)}`;
+  };
+  const scale = 15;
+  return (
+    <section id="missing" className="scroll-mt-6 border-t border-rule py-20 md:py-28">
+      <div className={container}>
+        <div className="max-w-[44rem]">
+          <h2 className={sectionTitle}>{t.missing.title}</h2>
+          <p className="mt-5 text-muted">{fill(t.missing.intro, { rows: missingIndicatorHoldoutRows.toLocaleString(htmlLang[locale]) })}</p>
+        </div>
+        <ul className="mt-12 grid gap-12 md:grid-cols-3 md:gap-0">
+          {missingIndicator.map((s, i) => (
+            <li key={s.id} className={`md:px-8 ${i === 0 ? "md:pl-0" : "md:border-l md:border-rule"} ${i === 2 ? "md:pr-0" : ""}`}>
+              <h3 className="font-display text-[1.375rem] font-semibold leading-snug">
+                {fill(t.missing.scenario, { names: joinAnd(s.missing) })}
+              </h3>
+              <p className="mt-1 text-[0.9375rem] text-muted">{fill(t.missing.uses, { names: joinAll(s.available) })}</p>
+              <p className="mt-3 flex items-center gap-2 font-semibold">
+                <span aria-hidden="true" className={`h-2.5 w-2.5 shrink-0 rounded-full ${s.usable ? "bg-river" : "bg-caution"}`} />
+                {s.usable ? t.missing.usable : t.missing.unreliable}
+              </p>
+              <dl className="mt-5 space-y-4">
+                {(
+                  [
+                    [t.missing.retrain, s.retrain],
+                    [t.missing.fillIn, s.fillIn],
+                  ] as const
+                ).map(([name, m]) => (
+                  <div key={name}>
+                    <dt className="text-[0.9375rem]">{name}</dt>
+                    <dd className="mt-1.5 flex items-center gap-3">
+                      <span className="h-2.5 flex-1 rounded-[3px] bg-wash" aria-hidden="true">
+                        <span
+                          className={`block h-full rounded-r-[3px] ${s.usable ? "bg-river" : "bg-caution"}`}
+                          style={{ width: `${Math.min(m.mae / scale, 1) * 100}%` }}
+                        />
+                      </span>
+                      <span className="w-[8.5rem] shrink-0 text-[0.9375rem] tabular">
+                        MAE {m.mae.toFixed(2)}
+                        <span className="ml-2 text-muted">R² {m.r2.toFixed(2).replace("-", "−")}</span>
+                      </span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6 text-[0.9375rem] text-muted">{t.missing.metricNote}</p>
+        <div className="mt-10 max-w-[44rem]">
+          <p className="border-l-2 border-river pl-4 text-[1.125rem]">{t.missing.takeaway}</p>
+          <p className="mt-4 text-[1rem] text-muted">{t.missing.scopeNote}</p>
+          <p className="mt-2">
+            <External href={links.missingIndicator} className={textLink}>
+              {t.missing.readMore}
+            </External>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Edge({ t }: { t: Copy }) {
   const max = Math.max(...nanoLatency.map((m) => m.p95));
   const rf = nanoLatency.find((m) => m.id === "rf")!;
@@ -508,33 +573,13 @@ function GetStarted({ t }: { t: Copy }) {
   );
 }
 
-function Scope({ t }: { t: Copy }) {
-  return (
-    <section className="border-t border-rule py-20 md:py-28" aria-labelledby="scope-title">
-      <div className={container}>
-        <h2 id="scope-title" className={sectionTitle}>
-          {t.scope.title}
-        </h2>
-        <ul className="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-2">
-          {t.scope.items.map((item) => (
-            <li key={item.title}>
-              <h3 className="font-display text-[1.3125rem] font-semibold">{item.title}</h3>
-              <p className="mt-1.5 text-muted">{item.body}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-10">
-          <External href={links.limitations} className={textLink}>
-            {t.scope.link}
-          </External>
-        </p>
-      </div>
-    </section>
-  );
-}
 
 function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
-  const other: Locale = locale === "en" ? "zh-TW" : "en";
+  const repos = [
+    [links.watermirror, "WaterMirror", t.footer.app],
+    [links.wqsurrogate, "WQSurrogateModels", t.footer.api],
+    [links.website, "watermirror-website", t.footer.website],
+  ] as const;
   const docs = [
     [links.apiReference, t.footer.docLinks.api],
     [links.formula, t.footer.docLinks.formula],
@@ -542,10 +587,12 @@ function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
     [links.limitations, t.footer.docLinks.limitations],
     [links.nanoBenchmark, t.footer.docLinks.nano],
   ] as const;
+  const footerLink = "inline-flex min-h-10 items-center hover:underline";
+  const footerHeading = "text-[0.9375rem] font-semibold text-paper/75";
   return (
     <footer className="bg-ink text-paper">
       <div className={`${container} grid gap-10 py-14 md:grid-cols-12`}>
-        <div className="md:col-span-5">
+        <div className="md:col-span-4">
           <p className="flex items-center gap-2.5 font-display text-[1.375rem] font-semibold">
             <span className="rounded bg-paper p-1">
               <BrandMark className="h-6 w-6" />
@@ -558,41 +605,51 @@ function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
               KageRyo
             </External>
           </p>
-          <p className="mt-2 text-[1rem]">
-            <Link href={localePath[other]} hrefLang={other} lang={other} className="inline-flex min-h-10 items-center underline underline-offset-4">
-              {t.nav.switchLanguage}
-            </Link>
-          </p>
+          <p className="mt-3 max-w-[22rem] text-[0.9375rem] text-paper/75">{t.footer.license}</p>
         </div>
         <div className="md:col-span-3">
-          <h2 className="text-[0.9375rem] font-semibold text-paper/75">{t.footer.repos}</h2>
+          <h2 className={footerHeading}>{t.footer.repos}</h2>
           <ul className="mt-2 space-y-1 text-[1rem]">
-            <li>
-              <External href={links.watermirror} className="inline-flex min-h-10 items-center hover:underline">
-                WaterMirror
-              </External>
-              <span className="block text-[0.9375rem] text-paper/60">{t.footer.app}</span>
-            </li>
-            <li>
-              <External href={links.wqsurrogate} className="inline-flex min-h-10 items-center hover:underline">
-                WQSurrogateModels
-              </External>
-              <span className="block text-[0.9375rem] text-paper/60">{t.footer.api}</span>
-            </li>
+            {repos.map(([href, name, role]) => (
+              <li key={href}>
+                <External href={href} className={footerLink}>
+                  {name}
+                </External>
+                <span className="block text-[0.9375rem] text-paper/75">{role}</span>
+              </li>
+            ))}
           </ul>
         </div>
-        <div className="md:col-span-4">
-          <h2 className="text-[0.9375rem] font-semibold text-paper/75">{t.footer.docs}</h2>
+        <div className="md:col-span-3">
+          <h2 className={footerHeading}>{t.footer.docs}</h2>
           <ul className="mt-2 text-[1rem]">
             {docs.map(([href, label]) => (
               <li key={href}>
-                <External href={href} className="inline-flex min-h-10 items-center hover:underline">
+                <External href={href} className={footerLink}>
                   {label}
                 </External>
               </li>
             ))}
           </ul>
         </div>
+        <nav aria-label={t.footer.languages} className="md:col-span-2">
+          <h2 className={footerHeading}>{t.footer.languages}</h2>
+          <ul className="mt-2 text-[1rem]">
+            {locales.map((l) => (
+              <li key={l}>
+                <Link
+                  href={localePath[l]}
+                  lang={htmlLang[l]}
+                  hrefLang={htmlLang[l]}
+                  aria-current={l === locale ? "page" : undefined}
+                  className={`${footerLink} aria-[current=page]:font-semibold`}
+                >
+                  {localeName[l]}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </footer>
   );
@@ -616,9 +673,9 @@ export function Landing({ locale }: { locale: Locale }) {
         <HowItWorks t={t} />
         <Bands t={t} />
         <Models t={t} />
+        <Missing t={t} locale={locale} />
         <Edge t={t} />
         <GetStarted t={t} />
-        <Scope t={t} />
       </main>
       <SiteFooter t={t} locale={locale} />
     </>

@@ -21,6 +21,8 @@ export const links = {
   edgeOptimization: wqDoc("edge-optimization-results"),
   fullstackRun: wqDoc("fullstack-local-run"),
   csvFormat: `${WATERMIRROR}/blob/main/docs/csv-format.md`,
+  website: "https://github.com/KageRyo/watermirror-website",
+  missingIndicator: wqDoc("missing-indicator-robustness-experiments"),
   author: "https://github.com/KageRyo",
 } as const;
 
@@ -104,3 +106,45 @@ export const rfSoak = { requests: 11897, minutes: 30, p95: 179.69 };
 
 // docs/edge-optimization-results.md: RF200 vs production RF300.
 export const rfCompression = { maeIncreasePct: 0.33, sizeReductionPct: 33, rfArtifactGB: 1.05 };
+
+// statistics/outputs/missing_indicator_robustness.csv (summarised in
+// statistics/outputs/statistical_summary.md and docs/limitations.md):
+// best model per approach, evaluated on the 10,714-row external hold-out.
+// "retrain": model trained on the remaining indicators only.
+// "fillIn": the missing indicator is reconstructed from the others first,
+// then a full-input surrogate scores the record.
+export const missingIndicatorHoldoutRows = 10714;
+
+export const missingIndicator = [
+  {
+    id: "nh3n",
+    missing: ["NH3N"],
+    available: ["DO", "BOD", "EC", "SS"],
+    retrain: { mae: 2.369, r2: 0.9494 },
+    fillIn: { mae: 2.397, r2: 0.9467 },
+    usable: true,
+  },
+  {
+    id: "bod",
+    missing: ["BOD"],
+    available: ["DO", "NH3N", "EC", "SS"],
+    retrain: { mae: 14.115, r2: -0.0235 },
+    fillIn: { mae: 12.14, r2: 0.1014 },
+    usable: false,
+  },
+  {
+    id: "bod_nh3n",
+    missing: ["BOD", "NH3N"],
+    available: ["DO", "EC", "SS"],
+    retrain: { mae: 14.725, r2: -0.1401 },
+    fillIn: { mae: 12.891, r2: -0.0079 },
+    usable: false,
+  },
+] as const satisfies readonly {
+  id: string;
+  missing: readonly Indicator[];
+  available: readonly Indicator[];
+  retrain: { mae: number; r2: number };
+  fillIn: { mae: number; r2: number };
+  usable: boolean;
+}[];

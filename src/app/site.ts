@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { copy, localePath, type Locale } from "@/content/copy";
+import { copy, localePath, locales, ogLocale, type Locale } from "@/content/copy";
 
-// Public origin of the deployed site, including the GitHub Pages project path.
-export const siteUrl = (process.env.SITE_URL ?? "https://kageryo.github.io/watermirror-website").replace(/\/$/, "");
+// Public origin of the deployed site, including its base path.
+export const siteUrl = (process.env.SITE_URL ?? "https://kageryo.coderyo.com/watermirror").replace(/\/$/, "");
 
 export function pageMetadata(locale: Locale): Metadata {
   const t = copy[locale];
@@ -15,8 +15,8 @@ export function pageMetadata(locale: Locale): Metadata {
     alternates: {
       canonical: url,
       languages: {
-        en: `${siteUrl}${localePath.en}`,
-        "zh-TW": `${siteUrl}${localePath["zh-TW"]}`,
+        ...Object.fromEntries(locales.map((l) => [l, `${siteUrl}${localePath[l]}`])),
+        "x-default": `${siteUrl}${localePath.en}`,
       },
     },
     openGraph: {
@@ -25,7 +25,8 @@ export function pageMetadata(locale: Locale): Metadata {
       siteName: "WaterMirror",
       title: t.meta.title,
       description: t.meta.description,
-      locale: locale === "en" ? "en_US" : "zh_TW",
+      locale: ogLocale[locale],
+      alternateLocale: locales.filter((l) => l !== locale).map((l) => ogLocale[l]),
     },
   };
 }

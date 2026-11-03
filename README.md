@@ -1,9 +1,11 @@
 # WaterMirror website
 
 Product website for [WaterMirror](https://github.com/KageRyo/WaterMirror) (Android app) and
-[WQSurrogateModels](https://github.com/KageRyo/WQSurrogateModels) (FastAPI service and research).
-It is a static Next.js site in English (`/`) and Traditional Chinese (`/zh-tw/`), deployed to
-GitHub Pages.
+[WQSurrogateModels](https://github.com/KageRyo/WQSurrogateModels) (FastAPI service and research),
+published at <https://kageryo.coderyo.com/watermirror/>.
+
+It is a static Next.js site in four languages: English (`/`), Traditional Chinese (`/zh-tw/`),
+Simplified Chinese (`/zh-cn/`) and Japanese (`/ja/`).
 
 ## Develop
 
@@ -16,25 +18,43 @@ npm run lint
 npm run typecheck  # run after a build or dev start, which generate next-env.d.ts
 ```
 
-## Build and preview the Pages output
+## Build
 
 ```bash
-PAGES_BASE_PATH=/watermirror-website npm run build
+PAGES_BASE_PATH=/watermirror SITE_URL=https://kageryo.coderyo.com/watermirror npm run build
 ```
 
-The static site is written to `out/`. To preview it under the same path GitHub Pages uses, serve a
-directory that contains `out/` as `watermirror-website/`.
+The static site is written to `out/`. `PAGES_BASE_PATH` is the path the site is served under, and
+`SITE_URL` is its public address, used for canonical and language links.
 
 ## Deploy
 
-`.github/workflows/pages.yml` builds every pull request and deploys every push to `main`. The
-workflow reads the base path and public URL from `actions/configure-pages`, so moving to a custom
-domain only needs a Pages setting change.
+[KageRyo/kageryo-website](https://github.com/KageRyo/kageryo-website) owns
+`kageryo.coderyo.com`. Its deployment checks out this repository's `main` branch, builds it with the
+settings above and serves `out/` as `/watermirror/`.
+
+`.github/workflows/ci.yml` builds every pull request and push. After a push to `main`, it starts the
+kageryo-website deployment so the change goes live. That step needs a repository secret named
+`KAGERYO_WEBSITE_DEPLOY_TOKEN`: a fine-grained token limited to `KageRyo/kageryo-website` with
+**Actions: Read and write**. Without it, the job leaves a warning and the change goes live at the
+next kageryo-website deployment.
 
 ## Content
 
 - `src/content/facts.ts` holds every number, version and link shown on the site, each with the
   document it was copied from. Update it after a new release or benchmark.
-- `src/content/copy.ts` holds the English and Traditional Chinese text. Both locales share one
-  `Copy` type, so a missing translation fails the build.
+- `src/content/locales/` holds the text for each language. All locales share one `Copy` type, so a
+  missing string fails the build. Each locale is written in local usage rather than converted: for
+  example, Simplified Chinese uses 数据, 保存 and 电导率 where Traditional Chinese uses 資料, 儲存 and
+  導電度.
 - `src/assets/screenshots/` holds app screenshots copied from `WaterMirror/docs/screenshots/`.
+
+## License
+
+The Apache License 2.0 applies to the source code and documentation included in this repository,
+unless otherwise stated. See [LICENSE](LICENSE).
+
+It does not grant any rights to research datasets, trained model artifacts, or other materials that
+are not distributed with this repository. Figures shown on the site are aggregate results published
+in [WQSurrogateModels](https://github.com/KageRyo/WQSurrogateModels). Obtain monitoring data from
+the official information network and comply with the applicable source terms.

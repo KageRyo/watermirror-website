@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # Same settings as the production build in KageRyo/kageryo-website.
+      # next build also runs the TypeScript check.
+      - run: npm run build
+        env:
+          PAGES_BASE_PATH: /watermirror
+          SITE_URL: https://kageryo.coderyo.com/watermirror
+
+  # The site is published at https://kageryo.coderyo.com/watermirror/ by the
+  # KageRyo/kageryo-website deployment, which builds this repository's main
+  # branch. This job asks that deployment to run after every change here.
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Trigger the kageryo-website deployment
+        env:
+          GH_TOKEN: ${{ secrets.KAGERYO_WEBSITE_DEPLOY_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::KAGERYO_WEBSITE_DEPLOY_TOKEN is not set, so this change goes live at the next kageryo-website deployment instead."
+            exit 0
+          fi
+          gh workflow run deploy-vue.yml --repo KageRyo/kageryo-website --ref main
