@@ -86,9 +86,8 @@ export function StaffGauge({
             y={y(v)}
             textAnchor="end"
             dominantBaseline="middle"
-            fontSize="13"
             fill="var(--color-muted)"
-            className="tabular"
+            className="gauge-num tabular"
           >
             {v}
           </text>
@@ -118,7 +117,7 @@ export function StaffGauge({
       {bands
         .filter((b) => b.id !== band)
         .map((b) => (
-          <text key={b.id} x={LABEL_X} y={y((b.min + b.max) / 2)} dominantBaseline="middle" fontSize="14" fill="var(--color-muted)">
+          <text key={b.id} x={LABEL_X} y={y((b.min + b.max) / 2)} dominantBaseline="middle" fill="var(--color-muted)" className="gauge-label">
             {bandNames[b.id]}
           </text>
         ))}
@@ -131,10 +130,10 @@ export function StaffGauge({
           ))}
         </g>
         <path d={wavePath(water, STRIP.x - 4, PLATE.x + PLATE.w + 6)} fill="none" stroke="var(--color-river)" strokeWidth="2" strokeLinecap="round" />
-        <text x={LABEL_X} y={water - 3} fontSize="24" fontWeight="600" fill="var(--color-ink)" className="tabular">
+        <text x={LABEL_X} y={water - 4} fontWeight="600" fill="var(--color-ink)" className="gauge-score tabular">
           {score.toFixed(2)}
         </text>
-        <text x={LABEL_X} y={water + 17} fontSize="14" fontWeight="600" fill="var(--color-ink)">
+        <text x={LABEL_X} y={water + 6} dominantBaseline="hanging" fontWeight="600" fill="var(--color-ink)" className="gauge-label">
           {bandNames[band]}
         </text>
       </g>

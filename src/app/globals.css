@@ -16,6 +16,7 @@
 }
 
 html {
+  color-scheme: light;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
@@ -100,5 +101,41 @@ pre {
 @media (prefers-reduced-motion: reduce) {
   .waterline {
     animation: none;
+  }
+}
+
+/* Gauge text is sized in SVG units, so it scales with the gauge. These sizes
+   keep it at 12px or more on screen at every gauge width used in the hero. */
+.gauge-num {
+  font-size: 20px;
+}
+.gauge-label {
+  font-size: 22px;
+}
+.gauge-score {
+  font-size: 34px;
+}
+
+@media (min-width: 640px) {
+  .gauge-num {
+    font-size: 15px;
+  }
+  .gauge-label {
+    font-size: 16px;
+  }
+  .gauge-score {
+    font-size: 27px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gauge-num {
+    font-size: 13px;
+  }
+  .gauge-label {
+    font-size: 14px;
+  }
+  .gauge-score {
+    font-size: 24px;
   }
 }

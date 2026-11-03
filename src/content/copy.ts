@@ -26,6 +26,7 @@ export type Copy = {
     source: string;
     facts: string[];
     figureCaption: string;
+    shotAlt: string;
     gaugeTitle: string;
   };
   indicators: { label: string; names: Record<Indicator, string>; unitNotes: Partial<Record<Indicator, string>> };
@@ -108,6 +109,7 @@ const en: Copy = {
     source: "View source on GitHub",
     facts: ["Android app {app}", "API {api} on PyPI", "Runs on x86 and ARM64"],
     figureCaption: "Result screen with sample data. The gauge marks the same score on the WQI5 scale.",
+    shotAlt: "WaterMirror report screen: overall score 62.45, Fair, with a percentile chart and the share of each band in the reference data.",
     gaugeTitle: "WQI5 gauge showing a score of {score}, in the {band} band",
   },
   indicators: {
@@ -290,6 +292,7 @@ const zhTW: Copy = {
     source: "在 GitHub 查看原始碼",
     facts: ["Android App {app}", "API {api}（PyPI）", "支援 x86 與 ARM64"],
     figureCaption: "以範例資料產生的結果畫面。水尺標出同一個分數在 WQI5 上的位置。",
+    shotAlt: "WaterMirror 報表畫面：綜合評分 62.45、中等，並附百分位圖與參考資料中各等級的比例。",
     gaugeTitle: "WQI5 水尺，分數 {score}，屬於「{band}」等級",
   },
   indicators: {

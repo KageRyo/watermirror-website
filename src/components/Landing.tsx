@@ -30,7 +30,8 @@ const buttonBase =
   "inline-flex min-h-12 items-center justify-center rounded-md px-5 py-2.5 text-[1.0625rem] font-semibold transition-colors";
 const primaryButton = `${buttonBase} bg-ink text-paper hover:bg-river`;
 const secondaryButton = `${buttonBase} border border-ink text-ink hover:bg-surface`;
-const textLink = "font-semibold text-river underline decoration-1 underline-offset-4 hover:text-ink";
+const textLink =
+  "inline-flex min-h-11 items-center font-semibold text-river underline decoration-1 underline-offset-4 transition-colors hover:text-ink";
 
 function External({ href, className, children, label }: { href: string; className?: string; children: ReactNode; label?: string }) {
   return (
@@ -59,7 +60,7 @@ function SiteHeader({ t, locale }: { t: Copy; locale: Locale }) {
         <ul className="flex gap-7 text-[1rem] text-muted">
           {nav.map(([href, label]) => (
             <li key={href}>
-              <a href={href} className="hover:text-ink">
+              <a href={href} className="inline-flex min-h-11 items-center transition-colors hover:text-ink">
                 {label}
               </a>
             </li>
@@ -67,10 +68,10 @@ function SiteHeader({ t, locale }: { t: Copy; locale: Locale }) {
         </ul>
       </nav>
       <div className="flex items-center gap-5 text-[1rem]">
-        <Link href={localePath[other]} hrefLang={other} lang={other} aria-label={t.nav.switchLanguageLabel} className="hover:text-river">
+        <Link href={localePath[other]} hrefLang={other} lang={other} aria-label={t.nav.switchLanguageLabel} className="inline-flex min-h-11 items-center transition-colors hover:text-river">
           {t.nav.switchLanguage}
         </Link>
-        <External href={links.watermirror} className="hover:text-river">
+        <External href={links.watermirror} className="inline-flex min-h-11 items-center transition-colors hover:text-river">
           {t.nav.github}
         </External>
       </div>
@@ -106,7 +107,7 @@ function Hero({ t, locale }: { t: Copy; locale: Locale }) {
       </div>
       <figure className="md:col-span-5 lg:col-span-6">
         <div className="flex items-stretch justify-center gap-3 sm:gap-5 md:justify-end">
-          <div className="w-[158px] shrink-0 sm:w-[195px] lg:w-[223px]">
+          <div className="w-[140px] shrink-0 sm:w-[195px] lg:w-[223px]">
             <StaffGauge
               id="hero-gauge"
               score={sampleReading.score}
@@ -115,7 +116,7 @@ function Hero({ t, locale }: { t: Copy; locale: Locale }) {
               title={fill(t.hero.gaugeTitle, { score: sampleReading.score, band: bandName })}
             />
           </div>
-          <PhoneShot src={resultShot} alt={t.hero.figureCaption} priority className="w-[11.5rem] shrink-0 sm:w-[14rem] lg:w-[16rem]" />
+          <PhoneShot src={resultShot} alt={t.hero.shotAlt} priority className="w-[10.5rem] shrink-0 sm:w-[14rem] lg:w-[16rem]" />
         </div>
         <figcaption className="mt-4 text-center text-[0.875rem] text-muted md:text-right">{t.hero.figureCaption}</figcaption>
       </figure>
@@ -151,9 +152,9 @@ function Features({ t }: { t: Copy }) {
       <div className="grid gap-14 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-6">
           <h2 className={sectionTitle}>{t.features.title}</h2>
-          <ul className="mt-10 space-y-7">
+          <ul className="mt-10 space-y-8">
             {t.features.items.map((item) => (
-              <li key={item.title} className="border-l-2 border-rule pl-5">
+              <li key={item.title}>
                 <h3 className="font-display text-[1.3125rem] font-semibold leading-snug">{item.title}</h3>
                 <p className="mt-1.5 text-muted">
                   <Rich text={item.body} />
@@ -558,22 +559,22 @@ function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
             </External>
           </p>
           <p className="mt-2 text-[1rem]">
-            <Link href={localePath[other]} hrefLang={other} lang={other} className="underline underline-offset-4">
+            <Link href={localePath[other]} hrefLang={other} lang={other} className="inline-flex min-h-10 items-center underline underline-offset-4">
               {t.nav.switchLanguage}
             </Link>
           </p>
         </div>
         <div className="md:col-span-3">
           <h2 className="text-[0.9375rem] font-semibold text-paper/75">{t.footer.repos}</h2>
-          <ul className="mt-3 space-y-3 text-[1rem]">
+          <ul className="mt-2 space-y-1 text-[1rem]">
             <li>
-              <External href={links.watermirror} className="hover:underline">
+              <External href={links.watermirror} className="inline-flex min-h-10 items-center hover:underline">
                 WaterMirror
               </External>
               <span className="block text-[0.9375rem] text-paper/60">{t.footer.app}</span>
             </li>
             <li>
-              <External href={links.wqsurrogate} className="hover:underline">
+              <External href={links.wqsurrogate} className="inline-flex min-h-10 items-center hover:underline">
                 WQSurrogateModels
               </External>
               <span className="block text-[0.9375rem] text-paper/60">{t.footer.api}</span>
@@ -582,10 +583,10 @@ function SiteFooter({ t, locale }: { t: Copy; locale: Locale }) {
         </div>
         <div className="md:col-span-4">
           <h2 className="text-[0.9375rem] font-semibold text-paper/75">{t.footer.docs}</h2>
-          <ul className="mt-3 space-y-2 text-[1rem]">
+          <ul className="mt-2 text-[1rem]">
             {docs.map(([href, label]) => (
               <li key={href}>
-                <External href={href} className="hover:underline">
+                <External href={href} className="inline-flex min-h-10 items-center hover:underline">
                   {label}
                 </External>
               </li>
