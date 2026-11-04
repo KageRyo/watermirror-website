@@ -72,7 +72,8 @@ function SiteHeader({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
       </nav>
       <div className="flex items-center gap-5 text-[1rem]">
         <LanguageMenu label={t.nav.language} current={locale} options={languageOptions} />
-        <External href={links.watermirror} className="inline-flex min-h-11 items-center transition-colors hover:text-river">
+        {/* Below 400px the header has no room for it; the hero links to GitHub right below. */}
+        <External href={links.watermirror} className="hidden min-h-11 items-center transition-colors hover:text-river min-[400px]:inline-flex">
           {t.nav.github}
         </External>
       </div>
@@ -83,10 +84,10 @@ function SiteHeader({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
 function Hero({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
   const bandName = t.bands.names[sampleReading.band];
   const titleSize =
-    locale === "en" ? "text-[2.625rem] md:text-[3.5rem] lg:text-[4rem]" : "text-[2.25rem] md:text-[3rem] lg:text-[3.5rem]";
+    locale === "en" ? "text-[2.625rem] md:text-[3.5rem] lg:text-[4rem]" : "text-[2rem] min-[360px]:text-[2.25rem] md:text-[3rem] lg:text-[3.5rem]";
   return (
-    <section className={`${container} grid gap-12 pb-16 pt-8 md:grid-cols-12 md:items-center md:gap-8 md:pb-24 md:pt-14`}>
-      <div className="md:col-span-7 lg:col-span-6">
+    <section className={`${container} grid grid-cols-1 gap-12 pb-16 pt-8 md:pb-24 md:pt-14 lg:grid-cols-12 lg:items-center lg:gap-8`}>
+      <div className="lg:col-span-6">
         <h1 className={`font-display font-semibold leading-[1.08] tracking-[-0.015em] ${titleSize}`}>
           {t.hero.title}
         </h1>
@@ -107,9 +108,12 @@ function Hero({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
           ))}
         </ul>
       </div>
-      <div className="md:col-span-5 lg:col-span-6">
-        <div className="flex items-stretch justify-center gap-3 sm:gap-5 md:justify-end">
-          <div className="w-[140px] shrink-0 sm:w-[195px] lg:w-[223px]">
+      {/* The gauge and phone need about 440px side by side, so they sit beside
+          the text only from lg; below that they go under it. On the narrowest
+          screens both shrink in proportion instead of overflowing. */}
+      <div className="lg:col-span-6">
+        <div className="flex items-stretch justify-center gap-3 sm:gap-5 lg:justify-end">
+          <div className="w-[140px] min-w-0 sm:w-[195px] lg:w-[223px]">
             <StaffGauge
               id="hero-gauge"
               score={sampleReading.score}
@@ -118,7 +122,7 @@ function Hero({ t, locale }: Readonly<{ t: Copy; locale: Locale }>) {
               title={fill(t.hero.gaugeTitle, { score: sampleReading.score, band: bandName })}
             />
           </div>
-          <PhoneShot src={screenshots[locale].result} alt={t.hero.shotAlt} priority className="w-[10.5rem] shrink-0 sm:w-[14rem] lg:w-[16rem]" />
+          <PhoneShot src={screenshots[locale].result} alt={t.hero.shotAlt} priority className="w-[10.5rem] min-w-0 sm:w-[14rem] lg:w-[16rem]" />
         </div>
       </div>
     </section>

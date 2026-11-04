@@ -35,7 +35,7 @@ export function LanguageMenu({ label, current, options }: Readonly<{ label: stri
 
   return (
     <details ref={ref} className="group relative">
-      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 transition-colors hover:text-river [&::-webkit-details-marker]:hidden">
+      <summary className="inline-flex min-h-11 whitespace-nowrap cursor-pointer list-none items-center gap-1.5 transition-colors hover:text-river [&::-webkit-details-marker]:hidden">
         <span className="sr-only">{label}: </span>
         {currentName}
         <svg aria-hidden="true" viewBox="0 0 12 12" className="h-3 w-3 transition-transform group-open:rotate-180">
