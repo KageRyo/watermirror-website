@@ -18,7 +18,7 @@ export const en: Copy = {
     github: "GitHub",
   },
   hero: {
-    title: "Read a river's water quality from five measurements.",
+    title: "Read a river, lake or reservoir from five measurements.",
     lede: "WaterMirror turns dissolved oxygen, BOD, ammonia nitrogen, conductivity and suspended solids into a WQI5 score, a quality band and a status for each indicator. Use the Android app, call the open API, or run the whole service on a Jetson Nano.",
     download: "Download for Android",
     source: "View source on GitHub",

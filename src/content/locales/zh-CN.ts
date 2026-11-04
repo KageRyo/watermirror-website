@@ -21,7 +21,8 @@ export const zhCN: Copy = {
     github: "GitHub",
   },
   hero: {
-    title: "用五项水质指标，读懂一条河的水质。",
+    // \u200b marks where the heading may wrap; CJK headings otherwise break only at punctuation.
+    title: "用五项水质指标，读懂河流、湖泊\u200b和水库的水质。",
     lede: "WaterMirror 将溶解氧、生化需氧量、氨氮、电导率和悬浮物换算为 WQI5 分数、水质等级以及每项指标的状态。你可以使用 Android 应用、调用开放 API，或把整套服务部署在 Jetson Nano 上。",
     download: "下载 Android 版",
     source: "在 GitHub 查看源代码",

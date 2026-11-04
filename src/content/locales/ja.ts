@@ -20,7 +20,7 @@ export const ja: Copy = {
     github: "GitHub",
   },
   hero: {
-    title: "5 つの測定値から、川の水質を読み解く。",
+    title: "5 つの測定値から、川や湖、ダム湖の水質を読み解く。",
     lede: "WaterMirror は溶存酸素、BOD、アンモニア態窒素、電気伝導度、浮遊物質から、WQI5 スコアと水質ランク、指標ごとの状態を求めます。Android アプリで使うことも、オープン API を呼び出すことも、サービス全体を Jetson Nano で動かすこともできます。",
     download: "Android 版をダウンロード",
     source: "GitHub でソースコードを見る",
